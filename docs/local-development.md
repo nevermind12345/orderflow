@@ -393,8 +393,11 @@ successful readiness response during the simulated outage.
 - The Domain and Application test projects each contain a passing placeholder;
   they do not prove business rules.
 - The API container has no Docker health check. Use the HTTP health endpoints.
-- An initial pull-request CI workflow exists, but a green GitHub-hosted run and
-  clean-checkout reproducibility remain unproven.
+- Commit `21891f5` has local clean-checkout evidence covering the Release build
+  and tests, explicit migration to a new SQL volume, Compose startup, and the
+  HTTP foundation checks. See `docs/foundation-testing.md` for the dated record.
+- An initial pull-request CI workflow exists, but a green GitHub-hosted run
+  remains unproven.
 - Production startup correctly does not apply migrations automatically; a
   controlled deployment migration step remains future work.
 

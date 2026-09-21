@@ -77,12 +77,13 @@ The initial migration applied successfully to the Compose database. Both API
 health endpoints returned 200 Healthy, Development OpenAPI returned 200, and
 an unknown endpoint returned 404 with an application/problem+json response.
 
-Deterministic development seed data, a green GitHub-hosted CI run, and
-clean-checkout verification remain outstanding. An initial PR workflow now
-exists but has only been exercised through its equivalent local commands. The
-Domain and Application tests are still placeholders and do not prove business
-behavior. The initial migration contains no business tables. Milestone 1 remains
-incomplete.
+Clean-checkout verification is now recorded below for commit `21891f5`.
+Deterministic development seed data and a green GitHub-hosted CI run remain
+outstanding. An initial PR workflow exists but has only been exercised through
+its equivalent local commands. The Domain and Application tests are still
+placeholders and do not prove business behavior. The API container has no Docker
+health check, and the initial migration contains no business tables. Milestone 1
+remains incomplete.
 
 ## Local verification — 2026-09-14
 
@@ -209,3 +210,48 @@ The workflow's substantive commands were run locally in the same order:
 This is local workflow-command evidence, not a successful GitHub Actions run.
 The workflow must be committed and executed by GitHub before initial PR CI or
 the related Foundation gate can be marked complete.
+
+## Clean-checkout verification — 2026-09-21
+
+Commit `21891f5498264b486ef356276a25f60f87a8ea44` was verified from a detached
+temporary worktree outside the repository. The worktree contained 48 tracked
+files and was clean before generated build and test outputs were created. Its
+ignored `.env` was copied from the main worktree without displaying its
+contents.
+
+Before the Compose check, repository-local tool restore, dependency restore with
+NuGet audit, the Release build, and the complete test suite had already passed
+from this worktree. The test result was 8 succeeded, 0 failed, and 0 skipped;
+six API integration tests used disposable SQL Server Testcontainers. The
+expected `Unhealthy` log appeared during the deliberate SQL outage test.
+
+The clean Compose verification used project name `orderflow-clean-21891f5`.
+The existing `orderflow` services were stopped without deleting their
+`orderflow_sql-data` volume. `docker compose config --quiet` passed before any
+clean-project resources existed. Starting only SQL created the distinct
+`orderflow-clean-21891f5_sql-data` volume, and SQL reached `healthy` on
+`127.0.0.1:1433`.
+
+Using the repository-local EF CLI 10.0.11 and a masked PowerShell password
+prompt, EF created the new `RestaurantOrdering` database and explicitly applied
+`20260914083626_InitialFoundation`. The clean API image then built successfully
+from the worktree, and Compose started it on `127.0.0.1:8080`. Runtime checks
+returned:
+
+- `/health/live`: 200 `Healthy`.
+- `/health/ready`: 200 `Healthy`.
+- `/openapi/v1.json`: 200 with OpenAPI 3.1.1.
+- An unknown endpoint: 404 `application/problem+json`, Problem Details status
+  404, and a nonempty `traceId`.
+
+After explicit approval, the project-scoped cleanup removed only the clean API
+and SQL containers, clean network, and
+`orderflow-clean-21891f5_sql-data` volume. The original `orderflow_sql-data`
+volume remained present. Restarting the original Compose project returned SQL
+to `healthy`; its API liveness and readiness checks both returned 200 `Healthy`.
+
+This proves local clean-checkout build, test, clean-database migration, Compose
+startup, and HTTP behavior for commit `21891f5`. It does not prove a green
+GitHub Actions run, deterministic development seed data, business behavior in
+the placeholder Domain/Application tests, or an API container health check.
+Milestone 1 remains incomplete.
