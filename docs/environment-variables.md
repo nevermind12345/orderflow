@@ -60,6 +60,12 @@ Both values require positive bounds validation at startup. Changing them does no
 
 ## Development seed data
 
+ADR 0006 assigns seed behavior to the milestones that introduce its real
+entities. The account variables below are an inactive configuration contract in
+Milestone 1. Milestone 2 must consume and validate them when Identity, roles, and
+demo accounts exist. Milestone 3 adds deterministic catalog and stock data; it
+must not overload account credentials with unrelated configuration.
+
 | Variable | Secret | Required in | Safe example | Purpose |
 | --- | --- | --- | --- | --- |
 | `DevelopmentSeed__Enabled` | No | Development only | `false` | Explicitly enables deterministic local seed accounts. |

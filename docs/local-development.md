@@ -64,10 +64,10 @@ Foundation Compose stack:
 - Keep `Database=RestaurantOrdering`.
 - Do not use these local values in CI or production.
 
-The remaining authentication and seed placeholders are not consumed by the
-current Foundation API. Replace and validate them when their corresponding
-features are implemented; do not mistake their presence for implemented
-authentication or seed-data support.
+The authentication and seed placeholders are not consumed by the current
+Foundation API. ADR 0006 assigns account and role seeding to Milestone 2, when
+Identity exists. Replace and validate these values then; do not mistake their
+presence for implemented authentication or seed-data support.
 
 Confirm that Git ignores the file:
 
@@ -386,10 +386,10 @@ successful readiness response during the simulated outage.
 
 - `RestaurantDbContext` has no entities, so `InitialFoundation` creates migration
   history but no business tables, constraints, or indexes.
-- Deterministic development seed data is not implemented. The seed variables in
-  `.env.example` are an inventory of future configuration, not working seed
-  behavior. Seed accounts and menu data cannot be meaningfully added until the
-  corresponding models exist.
+- Deterministic development seed data is intentionally scheduled with its owning
+  entities under ADR 0006: roles and demo accounts in Milestone 2, then
+  categories, menu items, availability, and stock in Milestone 3. The seed
+  variables in `.env.example` are not consumed by the Foundation API.
 - The Domain and Application test projects each contain a passing placeholder;
   they do not prove business rules.
 - The API container has no Docker health check. Use the HTTP health endpoints.

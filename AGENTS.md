@@ -513,7 +513,8 @@ Deliver:
 - solution and project boundaries;
 - SQL Server DbContext and initial migration;
 - Docker Compose;
-- deterministic development seed data;
+- documented ownership of development seed data by the milestones that introduce
+  the corresponding entities; do not add fake tables or a no-op seeder;
 - OpenAPI, Problem Details, liveness, and readiness;
 - initial pull-request CI.
 
@@ -534,12 +535,15 @@ Deliver:
 - access-token issuance;
 - hashed rotating refresh tokens;
 - reuse detection and logout revocation;
+- deterministic, idempotent Development-only role and demo-account seed data;
 - protected API endpoints and React routes;
 - authentication integration tests.
 
 Exit gate:
 
-- refresh-token rotation, old-token reuse, family revocation, role denial, and logout are proven by tests.
+- refresh-token rotation, old-token reuse, family revocation, role denial, and logout are proven by tests;
+- development authentication seeding is repeatable and blocked outside
+  `Development`.
 
 ### Milestone 3 - Menu and cart
 
@@ -548,6 +552,8 @@ Deliver:
 - category and menu schema;
 - admin management;
 - stock validation and archive behaviour;
+- deterministic, idempotent Development-only category, menu-item, availability,
+  and stock seed data;
 - customer menu;
 - typed cart reducer and review page;
 - menu and frontend tests.
@@ -557,6 +563,8 @@ Exit gate:
 - customer and admin menu journeys work;
 - negative stock is rejected;
 - archived items are hidden;
+- a clean development database receives the documented deterministic catalog
+  without duplicate records when seeding is repeated;
 - frontend remains non-authoritative.
 
 ### Milestone 4 - Transactional order placement

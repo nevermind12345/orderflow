@@ -78,11 +78,13 @@ health endpoints returned 200 Healthy, Development OpenAPI returned 200, and
 an unknown endpoint returned 404 with an application/problem+json response.
 
 Clean-checkout verification for commit `21891f5` and a successful GitHub-hosted
-CI run for commit `811bc60` are recorded below. Deterministic development seed
-data remains outstanding. The Domain and Application tests are still
-placeholders and do not prove business behavior. The API container has no Docker
-health check, and the initial migration contains no business tables. Milestone 1
-remains incomplete.
+CI run for commit `811bc60` are recorded below. ADR 0006 assigns deterministic
+development seed data to the milestones that introduce the corresponding real
+entities instead of adding fake Foundation schema. The Domain and Application
+tests are still placeholders and do not prove business behavior. The API
+container has no Docker health check, and the initial migration contains no
+business tables. Milestone 1 remains incomplete pending validation of this plan
+correction on the pull request.
 
 ## Local verification — 2026-09-14
 
@@ -253,7 +255,9 @@ This proves local clean-checkout build, test, clean-database migration, Compose
 startup, and HTTP behavior for commit `21891f5`. It does not by itself prove a
 green GitHub Actions run; the subsequent hosted run is recorded below. It also
 does not prove deterministic development seed data, business behavior in the
-placeholder Domain/Application tests, or an API container health check.
+placeholder Domain/Application tests, or an API container health check. Under
+ADR 0006, seed behavior is proved in Milestones 2 and 3 when its real entities
+exist.
 Milestone 1 remains incomplete.
 
 ## GitHub Actions verification — 2026-09-21
@@ -277,5 +281,25 @@ passed:
 The run uploaded a non-expired `test-results` artifact. This is the first actual
 GitHub-hosted execution of the pull-request workflow and closes the previously
 unproven CI evidence gap for commit `811bc60`. It does not resolve deterministic
-development seed data, placeholder Domain/Application tests, or the missing API
-container health check. Milestone 1 remains incomplete.
+development seed data because ADR 0006 deliberately assigns that evidence to
+Milestones 2 and 3. It also does not resolve placeholder Domain/Application
+tests or the missing API container health check. Milestone 1 remains incomplete
+pending validation of the plan correction.
+
+## Seed-data milestone correction — 2026-09-21
+
+The original plan assigned deterministic development seed data to Milestone 1
+while the Foundation `RestaurantDbContext` intentionally had no entities. Adding
+a fake table or a no-op seeder would have produced misleading evidence, while
+pulling authentication or menu entities forward would have violated the
+milestone sequence.
+
+ADR 0006 corrects ownership without weakening seed requirements. Milestone 2
+must implement and test deterministic, idempotent, Development-only roles and
+demo accounts alongside Identity. Milestone 3 must extend that behavior with
+deterministic categories, menu items, availability, and stock alongside the
+catalog schema. Seed behavior must be blocked outside `Development`, and reruns
+must not create duplicates.
+
+Milestone 1 instead documents and enforces this boundary. It does not claim seed
+behavior for nonexistent entities.

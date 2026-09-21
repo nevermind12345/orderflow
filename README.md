@@ -8,9 +8,11 @@ authentication, or order workflows.
 Milestone 1 is not complete. Local and clean-checkout evidence now covers the
 Release build and tests, isolated SQL Server migration, Docker Compose startup,
 health, OpenAPI, and Problem Details behavior. Deterministic development seed
-data remains outstanding. The Domain and Application tests are still
-placeholders, and the API container still has no Docker health check. The
-initial pull-request CI workflow passed on GitHub for PR #1 at commit `811bc60`.
+data is assigned to the milestones that introduce its real entities: accounts
+and roles in Milestone 2, then catalog and stock data in Milestone 3. The Domain
+and Application tests are still placeholders, and the API container still has
+no Docker health check. The initial pull-request CI workflow passed on GitHub
+for PR #1 at commit `811bc60`.
 
 ## Start here
 
@@ -60,3 +62,5 @@ Accepted decisions are recorded under [`docs/adr`](docs/adr):
 - Optimistic concurrency with SQL Server `rowversion`.
 - Polling before SignalR.
 - Simulated payment for the version-one portfolio scope.
+- [Development seed data follows its owning milestones](docs/adr/0006-seed-data-with-owning-milestones.md),
+  never fake Foundation tables or a no-op seeder.
