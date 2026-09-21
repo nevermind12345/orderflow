@@ -77,10 +77,9 @@ The initial migration applied successfully to the Compose database. Both API
 health endpoints returned 200 Healthy, Development OpenAPI returned 200, and
 an unknown endpoint returned 404 with an application/problem+json response.
 
-Clean-checkout verification is now recorded below for commit `21891f5`.
-Deterministic development seed data and a green GitHub-hosted CI run remain
-outstanding. An initial PR workflow exists but has only been exercised through
-its equivalent local commands. The Domain and Application tests are still
+Clean-checkout verification for commit `21891f5` and a successful GitHub-hosted
+CI run for commit `811bc60` are recorded below. Deterministic development seed
+data remains outstanding. The Domain and Application tests are still
 placeholders and do not prove business behavior. The API container has no Docker
 health check, and the initial migration contains no business tables. Milestone 1
 remains incomplete.
@@ -251,7 +250,32 @@ volume remained present. Restarting the original Compose project returned SQL
 to `healthy`; its API liveness and readiness checks both returned 200 `Healthy`.
 
 This proves local clean-checkout build, test, clean-database migration, Compose
-startup, and HTTP behavior for commit `21891f5`. It does not prove a green
-GitHub Actions run, deterministic development seed data, business behavior in
-the placeholder Domain/Application tests, or an API container health check.
+startup, and HTTP behavior for commit `21891f5`. It does not by itself prove a
+green GitHub Actions run; the subsequent hosted run is recorded below. It also
+does not prove deterministic development seed data, business behavior in the
+placeholder Domain/Application tests, or an API container health check.
 Milestone 1 remains incomplete.
+
+## GitHub Actions verification — 2026-09-21
+
+[Pull request #1](https://github.com/nevermind12345/orderflow/pull/1) triggered
+[GitHub Actions run 35582399048](https://github.com/nevermind12345/orderflow/actions/runs/35582399048)
+for head commit `811bc60fe893a88a5c843a073e3677d7a484fc3d`. The PR targeted
+`main` from `feature/foundation`, and the hosted `CI` workflow completed with a
+`success` conclusion.
+
+The `.NET build and test` job completed successfully. Its substantive steps all
+passed:
+
+- Restore local tools.
+- Restore and audit dependencies.
+- Build solution.
+- Verify Docker.
+- Run tests.
+- Upload test results.
+
+The run uploaded a non-expired `test-results` artifact. This is the first actual
+GitHub-hosted execution of the pull-request workflow and closes the previously
+unproven CI evidence gap for commit `811bc60`. It does not resolve deterministic
+development seed data, placeholder Domain/Application tests, or the missing API
+container health check. Milestone 1 remains incomplete.

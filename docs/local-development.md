@@ -396,8 +396,8 @@ successful readiness response during the simulated outage.
 - Commit `21891f5` has local clean-checkout evidence covering the Release build
   and tests, explicit migration to a new SQL volume, Compose startup, and the
   HTTP foundation checks. See `docs/foundation-testing.md` for the dated record.
-- An initial pull-request CI workflow exists, but a green GitHub-hosted run
-  remains unproven.
+- The initial pull-request CI workflow passed on GitHub for PR #1 at commit
+  `811bc60`. See `docs/foundation-testing.md` for the run and artifact evidence.
 - Production startup correctly does not apply migrations automatically; a
   controlled deployment migration step remains future work.
 

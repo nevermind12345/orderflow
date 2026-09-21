@@ -8,10 +8,9 @@ authentication, or order workflows.
 Milestone 1 is not complete. Local and clean-checkout evidence now covers the
 Release build and tests, isolated SQL Server migration, Docker Compose startup,
 health, OpenAPI, and Problem Details behavior. Deterministic development seed
-data and a green GitHub Actions run remain outstanding. The Domain and
-Application tests are still placeholders, and the API container still has no
-Docker health check. An initial pull-request CI workflow exists, but it has only
-been validated locally so far.
+data remains outstanding. The Domain and Application tests are still
+placeholders, and the API container still has no Docker health check. The
+initial pull-request CI workflow passed on GitHub for PR #1 at commit `811bc60`.
 
 ## Start here
 
@@ -43,13 +42,14 @@ been validated locally so far.
 - Commit `21891f5` has been verified from a detached clean worktree: all eight
   tests passed, a separate Compose project started against a new SQL volume,
   `InitialFoundation` applied explicitly, and the HTTP foundation checks passed.
-- The initial CI workflow restores and audits dependencies, builds the solution,
-  runs the real-SQL integration tests, and publishes TRX results.
+- The initial CI workflow passed on GitHub for PR #1: it restored and audited
+  dependencies, built the solution, ran the real-SQL integration tests, and
+  uploaded the `test-results` artifact.
 
 Do not interpret this list as completion of the Foundation milestone. The exit
 gate's clean-checkout, clean-database migration, health, and Compose behaviors
-now have local evidence, but green GitHub-hosted CI and the remaining milestone
-deliverables are not yet proven complete.
+have local evidence, and pull-request CI has passed on GitHub. The remaining
+milestone deliverables are not yet proven complete.
 
 ## Architecture decisions
 
