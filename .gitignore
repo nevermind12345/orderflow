@@ -1,0 +1,40 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/secrets.json
+*.pfx
+*.p12
+*.pem
+*.key
+
+# .NET
+**/bin/
+**/obj/
+TestResults/
+*.user
+*.suo
+.vs/
+
+# Node, Vite, and frontend tests
+**/node_modules/
+**/dist/
+**/coverage/
+**/playwright-report/
+**/test-results/
+
+# IDE and operating-system files
+.idea/
+Thumbs.db
+.DS_Store
+
+# Local tooling output
+artifacts/
+logs/
+*.log
+
+# Local binary planning documents
+docs/Restaurant_Ordering_Implementation_Plan.docx
+docs/Revised_Full_Stack_NET_Portfolio_Project_Singapore.docx
