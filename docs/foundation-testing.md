@@ -77,14 +77,12 @@ The initial migration applied successfully to the Compose database. Both API
 health endpoints returned 200 Healthy, Development OpenAPI returned 200, and
 an unknown endpoint returned 404 with an application/problem+json response.
 
-Clean-checkout verification for commit `21891f5` and a successful GitHub-hosted
-CI run for commit `811bc60` are recorded below. ADR 0006 assigns deterministic
-development seed data to the milestones that introduce the corresponding real
-entities instead of adding fake Foundation schema. The Domain and Application
-tests are still placeholders and do not prove business behavior. The API
-container has no Docker health check, and the initial migration contains no
-business tables. Milestone 1 remains incomplete pending validation of this plan
-correction on the pull request.
+Clean-checkout verification for commit `21891f5` and successful GitHub-hosted CI
+runs are recorded below. ADR 0006 assigns deterministic development seed data to
+the milestones that introduce the corresponding real entities instead of adding
+fake Foundation schema. The plan correction passed on GitHub at commit
+`5bd2732`. Every Milestone 1 exit gate now has observable evidence, so Foundation
+is complete on `feature/foundation` pending merge through PR #1.
 
 ## Local verification — 2026-09-14
 
@@ -252,13 +250,10 @@ volume remained present. Restarting the original Compose project returned SQL
 to `healthy`; its API liveness and readiness checks both returned 200 `Healthy`.
 
 This proves local clean-checkout build, test, clean-database migration, Compose
-startup, and HTTP behavior for commit `21891f5`. It does not by itself prove a
-green GitHub Actions run; the subsequent hosted run is recorded below. It also
-does not prove deterministic development seed data, business behavior in the
-placeholder Domain/Application tests, or an API container health check. Under
+startup, and HTTP behavior for commit `21891f5`. It did not by itself prove a
+green GitHub Actions run; the subsequent hosted runs are recorded below. Under
 ADR 0006, seed behavior is proved in Milestones 2 and 3 when its real entities
-exist.
-Milestone 1 remains incomplete.
+exist. The final gate assessment appears in the closeout section.
 
 ## GitHub Actions verification — 2026-09-21
 
@@ -278,13 +273,10 @@ passed:
 - Run tests.
 - Upload test results.
 
-The run uploaded a non-expired `test-results` artifact. This is the first actual
-GitHub-hosted execution of the pull-request workflow and closes the previously
-unproven CI evidence gap for commit `811bc60`. It does not resolve deterministic
-development seed data because ADR 0006 deliberately assigns that evidence to
-Milestones 2 and 3. It also does not resolve placeholder Domain/Application
-tests or the missing API container health check. Milestone 1 remains incomplete
-pending validation of the plan correction.
+The run uploaded a non-expired `test-results` artifact. This was the first actual
+GitHub-hosted execution of the pull-request workflow and closed the previously
+unproven CI evidence gap for commit `811bc60`. The later plan-correction run and
+final gate assessment are recorded below.
 
 ## Seed-data milestone correction — 2026-09-21
 
@@ -303,3 +295,40 @@ must not create duplicates.
 
 Milestone 1 instead documents and enforces this boundary. It does not claim seed
 behavior for nonexistent entities.
+
+The correction was committed as `5bd2732` and validated by
+[GitHub Actions run 35584531101](https://github.com/nevermind12345/orderflow/actions/runs/35584531101).
+The `.NET build and test` job completed successfully for exact head SHA
+`5bd27324773d7ae2b884789b036b4bed5d946c55`. Tool restore, dependency restore
+and audit, Release build, Docker verification, tests, and test-result upload all
+passed. The run uploaded a non-expired `test-results` artifact.
+
+## Milestone 1 closeout — 2026-09-22
+
+Milestone 1 is complete on `feature/foundation` pending merge through
+[pull request #1](https://github.com/nevermind12345/orderflow/pull/1). The PR is
+open, non-draft, mergeable, and clean at validated head `5bd2732`.
+
+Exit-gate evidence:
+
+- **Clean checkout builds:** the detached clean worktree at commit `21891f5`
+  restored repository tools and audited dependencies, built all seven projects
+  in Release, and passed all eight tests with 0 failed and 0 skipped.
+- **Compose starts required services:** the isolated
+  `orderflow-clean-21891f5` project started SQL Server healthy and the API on the
+  documented ports using a separate temporary SQL volume.
+- **Migrations apply to a clean database:** repository-local EF CLI 10.0.11
+  created `RestaurantOrdering` and explicitly applied
+  `20260914083626_InitialFoundation` to the new volume.
+- **Health endpoints work:** clean-checkout liveness and SQL-backed readiness
+  both returned 200 `Healthy`; OpenAPI 3.1.1 and 404 Problem Details with a
+  nonempty `traceId` also passed.
+- **CI is green:** run `35584531101` completed successfully for the validated
+  plan-correction head, including build, real-SQL integration tests, dependency
+  audit, Docker verification, and test-result publication.
+
+The placeholder Domain/Application tests accurately reflect that those projects
+contain no business behavior yet. The missing API container health check does
+not replace or invalidate the proven HTTP health contracts and is not a stated
+Foundation exit gate. Seed behavior remains mandatory in Milestones 2 and 3
+under ADR 0006. No Milestone 2 behavior is claimed by this closeout.

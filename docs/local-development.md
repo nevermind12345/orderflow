@@ -382,7 +382,7 @@ its own isolated SQL container to prove that readiness returns `503` while
 liveness remains healthy. Do not weaken readiness or change the test to expect a
 successful readiness response during the simulated outage.
 
-## Current Foundation limitations
+## Post-Foundation limitations
 
 - `RestaurantDbContext` has no entities, so `InitialFoundation` creates migration
   history but no business tables, constraints, or indexes.
@@ -396,10 +396,13 @@ successful readiness response during the simulated outage.
 - Commit `21891f5` has local clean-checkout evidence covering the Release build
   and tests, explicit migration to a new SQL volume, Compose startup, and the
   HTTP foundation checks. See `docs/foundation-testing.md` for the dated record.
-- The initial pull-request CI workflow passed on GitHub for PR #1 at commit
-  `811bc60`. See `docs/foundation-testing.md` for the run and artifact evidence.
+- The initial pull-request CI workflow passed on GitHub for PR #1. The plan
+  correction and final Foundation gate assessment passed at commit `5bd2732`.
+  See `docs/foundation-testing.md` for the run and artifact evidence.
 - Production startup correctly does not apply migrations automatically; a
   controlled deployment migration step remains future work.
 
-These limitations mean Milestone 1 is not complete even when all commands in
-this guide succeed locally.
+These are explicit boundaries or later-milestone work, not failed Foundation
+exit gates. Milestone 1 is complete on `feature/foundation` pending merge through
+PR #1. This does not imply that authentication, menu, cart, or order behavior is
+implemented.

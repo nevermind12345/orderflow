@@ -1,18 +1,19 @@
 # OrderFlow
 
 OrderFlow is a production-style restaurant ordering and operations platform
-being built as a modular .NET monolith. The current repository is in **Milestone
-1 — Foundation**. It does not yet implement customer, administrator, menu, cart,
-authentication, or order workflows.
+being built as a modular .NET monolith. **Milestone 1 — Foundation is complete
+on `feature/foundation` and awaiting merge through PR #1.** Customer,
+administrator, menu, cart, authentication, and order workflows are not yet
+implemented.
 
-Milestone 1 is not complete. Local and clean-checkout evidence now covers the
-Release build and tests, isolated SQL Server migration, Docker Compose startup,
-health, OpenAPI, and Problem Details behavior. Deterministic development seed
-data is assigned to the milestones that introduce its real entities: accounts
-and roles in Milestone 2, then catalog and stock data in Milestone 3. The Domain
-and Application tests are still placeholders, and the API container still has
-no Docker health check. The initial pull-request CI workflow passed on GitHub
-for PR #1 at commit `811bc60`.
+Foundation evidence covers the Release build and tests, isolated SQL Server
+migration, Docker Compose startup, health, OpenAPI, Problem Details, clean
+checkout, and GitHub-hosted CI. Deterministic development seed data is assigned
+to the milestones that introduce its real entities: accounts and roles in
+Milestone 2, then catalog and stock data in Milestone 3. The Domain and
+Application tests remain placeholders because they contain no business behavior
+yet, and the API container has no Docker health check; neither is a Foundation
+exit-gate failure.
 
 ## Start here
 
@@ -48,10 +49,10 @@ for PR #1 at commit `811bc60`.
   dependencies, built the solution, ran the real-SQL integration tests, and
   uploaded the `test-results` artifact.
 
-Do not interpret this list as completion of the Foundation milestone. The exit
-gate's clean-checkout, clean-database migration, health, and Compose behaviors
-have local evidence, and pull-request CI has passed on GitHub. The remaining
-milestone deliverables are not yet proven complete.
+Together, the clean-worktree evidence and successful pull-request workflow prove
+every Milestone 1 exit-gate requirement. See the Foundation testing evidence for
+the gate-by-gate closeout. This does not imply that any Milestone 2 product or
+security behavior exists yet.
 
 ## Architecture decisions
 
