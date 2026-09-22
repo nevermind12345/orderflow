@@ -82,7 +82,7 @@ runs are recorded below. ADR 0006 assigns deterministic development seed data to
 the milestones that introduce the corresponding real entities instead of adding
 fake Foundation schema. The plan correction passed on GitHub at commit
 `5bd2732`. Every Milestone 1 exit gate now has observable evidence, so Foundation
-is complete on `feature/foundation` pending merge through PR #1.
+is complete on `main` at merge commit `e361748`.
 
 ## Local verification — 2026-09-14
 
@@ -305,9 +305,10 @@ passed. The run uploaded a non-expired `test-results` artifact.
 
 ## Milestone 1 closeout — 2026-09-22
 
-Milestone 1 is complete on `feature/foundation` pending merge through
-[pull request #1](https://github.com/nevermind12345/orderflow/pull/1). The PR is
-open, non-draft, mergeable, and clean at validated head `5bd2732`.
+Milestone 1 is complete on `main`.
+[Pull request #1](https://github.com/nevermind12345/orderflow/pull/1) merged the
+validated Foundation branch as commit
+`e3617485f2e0720945bee23fe2ad995641e78bb4` on 2026-09-22.
 
 Exit-gate evidence:
 
@@ -323,12 +324,18 @@ Exit-gate evidence:
 - **Health endpoints work:** clean-checkout liveness and SQL-backed readiness
   both returned 200 `Healthy`; OpenAPI 3.1.1 and 404 Problem Details with a
   nonempty `traceId` also passed.
-- **CI is green:** run `35584531101` completed successfully for the validated
-  plan-correction head, including build, real-SQL integration tests, dependency
-  audit, Docker verification, and test-result publication.
+- **CI is green:** the closeout head passed in run `35699873340`, and
+  [post-merge main run 35700277856](https://github.com/nevermind12345/orderflow/actions/runs/35700277856)
+  completed successfully for merge commit `e3617485`. The main run covered
+  tool restore, dependency restore and audit, Release build, Docker verification,
+  real-SQL integration tests, and test-result publication.
 
 The placeholder Domain/Application tests accurately reflect that those projects
 contain no business behavior yet. The missing API container health check does
 not replace or invalidate the proven HTTP health contracts and is not a stated
 Foundation exit gate. Seed behavior remains mandatory in Milestones 2 and 3
 under ADR 0006. No Milestone 2 behavior is claimed by this closeout.
+
+The post-merge run uploaded a non-expired `test-results` artifact. This confirms
+that the same Foundation gate remains green after integration into `main`, not
+only on the feature branch.

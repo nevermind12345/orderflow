@@ -2,9 +2,8 @@
 
 OrderFlow is a production-style restaurant ordering and operations platform
 being built as a modular .NET monolith. **Milestone 1 — Foundation is complete
-on `feature/foundation` and awaiting merge through PR #1.** Customer,
-administrator, menu, cart, authentication, and order workflows are not yet
-implemented.
+on `main` at merge commit `e361748`.** Customer, administrator, menu, cart,
+authentication, and order workflows are not yet implemented.
 
 Foundation evidence covers the Release build and tests, isolated SQL Server
 migration, Docker Compose startup, health, OpenAPI, Problem Details, clean
@@ -45,9 +44,9 @@ exit-gate failure.
 - Commit `21891f5` has been verified from a detached clean worktree: all eight
   tests passed, a separate Compose project started against a new SQL volume,
   `InitialFoundation` applied explicitly, and the HTTP foundation checks passed.
-- The initial CI workflow passed on GitHub for PR #1: it restored and audited
-  dependencies, built the solution, ran the real-SQL integration tests, and
-  uploaded the `test-results` artifact.
+- The initial CI workflow passed on PR #1 and again on merged `main`: it restored
+  and audited dependencies, built the solution, ran the real-SQL integration
+  tests, and uploaded the `test-results` artifact.
 
 Together, the clean-worktree evidence and successful pull-request workflow prove
 every Milestone 1 exit-gate requirement. See the Foundation testing evidence for
