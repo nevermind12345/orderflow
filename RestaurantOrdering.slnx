@@ -1,0 +1,26 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Restaurant.Api/Restaurant.Api.csproj">
+      <BuildDependency Project="src/Restaurant.Application/Restaurant.Application.csproj" />
+      <BuildDependency Project="src/Restaurant.Infrastructure/Restaurant.Infrastructure.csproj" />
+    </Project>
+    <Project Path="src/Restaurant.Application/Restaurant.Application.csproj">
+      <BuildDependency Project="src/Restaurant.Domain/Restaurant.Domain.csproj" />
+    </Project>
+    <Project Path="src/Restaurant.Domain/Restaurant.Domain.csproj" />
+    <Project Path="src/Restaurant.Infrastructure/Restaurant.Infrastructure.csproj">
+      <BuildDependency Project="src/Restaurant.Application/Restaurant.Application.csproj" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Restaurant.Api.IntegrationTests/Restaurant.Api.IntegrationTests.csproj">
+      <BuildDependency Project="src/Restaurant.Api/Restaurant.Api.csproj" />
+    </Project>
+    <Project Path="tests/Restaurant.Application.Tests/Restaurant.Application.Tests.csproj">
+      <BuildDependency Project="src/Restaurant.Application/Restaurant.Application.csproj" />
+    </Project>
+    <Project Path="tests/Restaurant.Domain.Tests/Restaurant.Domain.Tests.csproj">
+      <BuildDependency Project="src/Restaurant.Domain/Restaurant.Domain.csproj" />
+    </Project>
+  </Folder>
+</Solution>
